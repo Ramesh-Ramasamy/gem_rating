@@ -10,23 +10,36 @@
 #   http://dev.mysql.com/doc/refman/5.7/en/old-client.html
 #
 default: &default
-  adapter: mysql2
-  encoding: utf8
-  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  username: root
-  password:
-  socket: /var/run/mysqld/mysqld.sock
+  # adapter: mysql
+  # encoding: utf8
+  # database: instant_dev
+  # pool: 2
+  # username: root
+  # password: root
+  # socket: /var/run/mysqld/mysqld.sock
 
 development:
-  <<: *default
-  database: gem_rating_development
+  adapter: mysql2
+  encoding: utf8
+  database: instant_dev
+  pool: 2
+  username: root
+  password: root
+  socket: /var/run/mysqld/mysqld.sock
+  # database: gem_vendor_development
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
 test:
-  <<: *default
-  database: gem_rating_test
+  adapter: mysql
+  encoding: utf8
+  database: instant_test
+  pool: 2
+  username: root
+  password: root
+  socket: /var/run/mysqld/mysqld.sock
+  # database: gem_vendor_test
 
 # As with config/secrets.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
@@ -48,7 +61,14 @@ test:
 #     url: <%= ENV['DATABASE_URL'] %>
 #
 production:
-  <<: *default
-  database: gem_rating_production
-  username: gem_rating
-  password: <%= ENV['GEM_RATING_DATABASE_PASSWORD'] %>
+  # database: gem_vendor_production
+  # username: gem_vendor
+  # password: <%= ENV['GEM_VENDOR_DATABASE_PASSWORD'] %>
+  adapter: mysql
+  encoding: utf8
+  database: instant_prod
+  pool: 2
+  username: app
+  password: root
+  host: db3.bab.infypedia.org
+  port: 3306
