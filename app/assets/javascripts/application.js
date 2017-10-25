@@ -16,4 +16,6 @@
 //= require angular-ui-router.min
 //= require jquery.min
 //= require ui-bootstrap-tpls-2.5.0.min
+//= require angular-animate.min
+//= require lodash.min
 //= require home	

@@ -1,4 +1,4 @@
-home = angular.module("home",["ui.router"])//, ["restangular","ui.bootstrap","ui.router"])
+home = angular.module("home",["ui.router",'ui.bootstrap','ngAnimate'])//, ["restangular","ui.bootstrap","ui.router"])
 //,"oc.lazyLoad"
 home.config(['$stateProvider','$urlRouterProvider',function($stateProvider,$urlRouterProvider) {
   // $urlRouterProvider.otherwise("/home")
@@ -14,6 +14,12 @@ home.config(['$stateProvider','$urlRouterProvider',function($stateProvider,$urlR
 }])
 
 home.controller("vendorRatingCtrl", ["$scope", function($scope){
-  $scope.h = "John";
+  $scope.arrowimg = "down"
+  $scope.arrow_img = function(arrowimg){
+    if(arrowimg == "down")
+      $scope.arrowimg = "up"
+    else
+      $scope.arrowimg = "down"
+  }
 }])
 
