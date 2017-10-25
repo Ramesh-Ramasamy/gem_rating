@@ -12,4 +12,7 @@
 //
 //= require rails-ujs
 //= require turbolinks
-//= require_tree .
+//= require angular.min
+//= require angular-ui-router.min
+//= require home	
+
