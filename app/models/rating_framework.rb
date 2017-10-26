@@ -1,0 +1,3 @@
+class RatingFramework < ApplicationRecord
+
+end

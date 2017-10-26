@@ -1,0 +1,3 @@
+class LeadTimeRatingCalculator < RatingCalculator
+
+end

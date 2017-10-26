@@ -1,0 +1,3 @@
+class RateOfSupplyRatingCalculator < RatingCalculator
+
+end

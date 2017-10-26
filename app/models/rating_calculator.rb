@@ -1,0 +1,3 @@
+class RatingCalculator < ApplicationRecord
+
+end

@@ -1,0 +1,3 @@
+class RatingFactorSummary < ApplicationRecord
+
+end

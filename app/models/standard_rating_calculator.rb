@@ -1,0 +1,3 @@
+class StandardRatingCalculator < RatingCalculator
+
+end

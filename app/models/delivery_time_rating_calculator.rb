@@ -1,0 +1,3 @@
+class DeliveryTimeRatingCalculator < RatingCalculator
+
+end
