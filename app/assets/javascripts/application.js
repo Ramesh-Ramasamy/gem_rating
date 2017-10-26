@@ -14,8 +14,9 @@
 //= require turbolinks
 //= require angular.min
 //= require angular-ui-router.min
+//= require lodash.min
+//= require restangular
 //= require jquery.min
 //= require ui-bootstrap-tpls-2.5.0.min
 //= require angular-animate.min
-//= require lodash.min
 //= require home	
