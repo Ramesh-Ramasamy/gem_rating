@@ -14,7 +14,8 @@ home.config(['$stateProvider','$urlRouterProvider',function($stateProvider,$urlR
 home.controller("vendorRatingCtrl", ['$scope','Restangular', function($scope,$rest){
 
   $rest.all('vendor_rating').customGETLIST('get_rating_factors').then(function(data){
-    $scope.rating_factors = data
+    $scope.rating_factors = data[0].rating_factors_tree
+    console.log(data)
   });
 
   $scope.updateFactor = function(rating_factor){

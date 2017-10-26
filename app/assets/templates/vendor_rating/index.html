@@ -10,6 +10,7 @@
               <div ng-init="arrowimg = 'down'" ng-click="arrowimg=arrow_img(arrowimg)" class="tab-expand">
                 <span class="text-capitalize" style="color: #02aef0"><b>{{rf.code}}</b> </span>
                 <div style="float: right">
+                  <span style="color:red">{{rf.attrs.weightage}} %</span>
                   <img ng-src="/images/{{arrowimg}}.png" alt = "/images/down.png" style="margin-top: -5px;" width=30 height=30>
                 </div>
               </div>
@@ -17,21 +18,26 @@
             <form role="form">
               <div class="form-group">
                 <div class="row" style="padding: 5px" ng-repeat="(key, value) in rf.attrs">
+                <div ng-hide="$last">
                   <div class="col-xs-2">
                     <label>{{key}}</label>
                   </div>
                   <div class="col-xs-7">
                     <input type="text" class="form-control" ng-model="rf.attrs[key]" ng-disabled="isNotEditable(key)">
                   </div>
+                </div>
                   <br>
                 </div>
               </div>
             </form>
+            <center>
+              <input type="button" class="btn btn-success" value="Update" ng-click="updateFactor(rf)"/>
+            </center>
             <hr>
             <h4 style="color: #02aef0">Sub Factors</h4>
             <div class="row">
-              <div class="col-xs-1"></div>   
-              <div class="col-xs-9">
+              <div style="padding: 10px">
+              <div class="col-md-12">
                 <div class="row" ng-repeat="chrf in rf.children">
                   <uib-accordion close-others="false">
                     <div uib-accordion-group class="panel-default" is-open="false">
@@ -45,26 +51,53 @@
                       </uib-accordion-heading>
                       <form role="form">
                         <div class="form-group">
-                          <div class="row" style="padding: 5px" ng-repeat="(key, value) in chrf.attrs">
-                            <div class="col-xs-2">
-                              <label>{{key}}</label>
+                          <div class="row" style="padding: 5px" ng-repeat="(key, value) in chrf.attrs track by $index">
+                            <div ng-show="!$last">
+                              <div class="col-xs-2">
+                                <label>{{key}}</label>
+                              </div>
+                              <div class="col-xs-7">
+                                <input type="text" class="form-control" ng-model="chrf.attrs[key]" ng-disabled="isNotEditable(key)">
+                              </div>
+                              <br>
                             </div>
-                            <div class="col-xs-7">
-                              <input type="text" class="form-control" ng-model="chrf.attrs[key]" ng-disabled="isNotEditable(key)">
+                            <div ng-show="$last">
+                              <div class="col-xs-2">
+                                <label>Configuration</label>
+                              </div>
+                              <div class="col-xs-7">
+                              <!-- {{chrf.attrs[key].slabs}} -->
+                                <table class="table">
+                                  <tr>
+                                    <th>From</th>
+                                    <th>To</th>
+                                    <th>Rating</th>
+                                  </tr>
+                                  <tr ng-repeat = "slab in chrf.attrs[key].slabs">
+                                    <td ng-repeat = "(key, value) in slab">
+                                      <input type="text" class="form-control" ng-model="slab[key]" >
+                                    </td>
+                                  </tr>
+                                </table>
+                                <!-- <input type="text" class="form-control" ng-model="chrf.attrs[key]" ng-disabled="isNotEditable(key)"> -->
+                              </div>
+                              <br>
                             </div>
-                            <br>
                           </div>
                         </div>
                       </form>
+                      <center>
+                        <input type="button" class="btn btn-success" value="Update" ng-click="updateFactor(rf)"/>
+                      </center>
                     </div>
                   </uib-accordion>
                 </div>
-              </div>   
-              <div class="col-xs-1"></div>   
+              </div>
+              </div>  
             </div>
-            <center>
-              <input type="button" class="btn btn-success" value="Update Factor" ng-click="updateFactor(rf)"/>
-            </center>
+            <!-- <center>
+              <input type="button" class="btn btn-success" value="Update" ng-click="updateFactor(rf)"/>
+            </center> -->
           </div>
         </uib-accordion>
       </div>

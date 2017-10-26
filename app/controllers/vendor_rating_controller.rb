@@ -25,6 +25,7 @@ class VendorRatingController < ApplicationController
   #   render json: result
   # end
 
+
   def update_rating_factor
     rf = RatingFactor.where(id: params[:id]).first
     rf.update_attributes!(permit_params)
