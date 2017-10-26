@@ -6,14 +6,13 @@
       <uib-accordion close-others="false">
         <div uib-accordion-group class="panel-default" is-open="false">
           <uib-accordion-heading>
-            <div ng-init="arrowimg='down'" ng-click="arrow_img(arrowimg)" class="tab-expand">
+            <div ng-click="arrow_img(arrowimg)" class="tab-expand">
               Delivery
               <div style="float: right">
-                <img ng-if="arrowimg" ng-src="/images/{{arrowimg}}.png" alt = "/images/down.png" width=20 height=20>
+                <img ng-if="arrowimg" ng-src="/images/{{arrowimg}}.png" alt = "/images/down.png" style="margin-top: -5px;" width=30 height=30>
               </div>
             </div>
           </uib-accordion-heading>
-          {{h}}
           World
         </div>
       </uib-accordion>
