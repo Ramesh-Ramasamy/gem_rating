@@ -27,8 +27,6 @@ class VendorRatingController < ApplicationController
 
   def update_rating_factor
     rf = RatingFactor.where(id: params[:id]).first
-    whitelisted_attrs = ["weightage", "config"]
-    update_hash = params.slice("weightage","config")
     rf.update_attributes!(permit_params)
     render json: {status: "success"}
   end
@@ -43,6 +41,6 @@ class VendorRatingController < ApplicationController
 
   private
   def permit_params
-    params.permit(:weightage, :config)
+    params.permit(:weightage, {config: {}})
   end
 end
