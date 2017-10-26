@@ -35,6 +35,8 @@ gem 'acts_as_audited', '1.1.1'
 # gem 'capistrano-rails', group: :development
 gem 'haml'
 gem 'hirb'
+gem 'rabl'
+gem 'oj'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
