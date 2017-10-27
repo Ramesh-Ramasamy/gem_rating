@@ -1,4 +1,7 @@
 <div ng-controller="vendorRatingCtrl">
+  <div style="z-index:100;position: fixed; top: 40px; right: 0; width: 40%">
+    <div uib-alert ng-repeat="alert in alerts" ng-class="'alert-' + (alert.type || 'warning')" close="closeAlert($index)" dismiss-on-timeout="5000">{{alert.msg}}</div>
+  </div>
   <br>
   <div class="row" style="width:100%">
     <div class="col-md-1"></div>
@@ -10,28 +13,30 @@
               <div ng-init="arrowimg = 'down'" ng-click="arrowimg=arrow_img(arrowimg)" class="tab-expand">
                 <span class="text-capitalize" style="color: #02aef0"><b>{{rf.code}}</b> </span>
                 <div style="float: right">
-                  <span style="color:red">{{rf.attrs.weightage}} %</span>
+                  <span style="color:red"><b>{{rf.attrs.weightage}} % </b></span>
                   <img ng-src="/images/{{arrowimg}}.png" alt = "/images/down.png" style="margin-top: -5px;" width=30 height=30>
                 </div>
               </div>
             </uib-accordion-heading>
             <form role="form">
               <div class="form-group">
-                <div class="row" style="padding: 5px" ng-repeat="(key, value) in rf.attrs">
-                <div ng-hide="$last">
-                  <div class="col-xs-2">
-                    <label>{{key}}</label>
+                <div class="row" style="padding: 5px">
+                 <div class="col-xs-3" ng-repeat="(key, value) in rf.attrs">
+                    <div ng-show="!$last">
+                      <label>{{key}}</label><span style="color:red"ng-if="isPercentageAttrs(key)"><b> (%)</b></span>
+                      <input type="text" class="form-control" ng-model="rf.attrs[key]" ng-disabled="isNotEditable(key)">
+                    </div>
                   </div>
-                  <div class="col-xs-7">
-                    <input type="text" class="form-control" ng-model="rf.attrs[key]" ng-disabled="isNotEditable(key)">
+                  <div class="col-xs-3" style="padding-top: 22px;">
+                    <center>
+                      <input type="button" class="btn btn-success" value="Update" ng-click="updateFactor(rf)"/>
+                     </center>
                   </div>
-                </div>
                   <br>
                 </div>
               </div>
             </form>
             <center>
-              <input type="button" class="btn btn-success" value="Update" ng-click="updateFactor(rf)"/>
             </center>
             <hr>
             <h4 style="color: #02aef0">Sub Factors</h4>
@@ -45,41 +50,36 @@
                         <div ng-init="arrowimg = 'down'" ng-click="arrowimg=arrow_img(arrowimg)" class="tab-expand">
                           <span><b>{{chrf.code}}</b> </span>
                           <div style="float: right">
+                            <span style="color:red"><b>{{chrf.attrs.weightage}} %</b></span>
                             <img ng-src="/images/{{arrowimg}}.png" alt = "/images/down.png" style="margin-top: -5px;" width=30 height=30>
                           </div>
                         </div>
                       </uib-accordion-heading>
                       <form role="form">
                         <div class="form-group">
-                          <div class="row" style="padding: 5px" ng-repeat="(key, value) in chrf.attrs track by $index">
-                            <div ng-show="!$last">
-                              <div class="col-xs-2">
-                                <label>{{key}}</label>
-                              </div>
-                              <div class="col-xs-7">
+                          <div class="row" style="padding: 5px">
+                            <div class="col-xs-4" ng-repeat="(key, value) in chrf.attrs">
+                              <div ng-show="!$last">
+                                <label>{{key}}</label><span style="color:red"ng-if="isPercentageAttrs(key)"><b> (%)</b></span>
                                 <input type="text" class="form-control" ng-model="chrf.attrs[key]" ng-disabled="isNotEditable(key)">
                               </div>
-                              <br>
                             </div>
-                            <div ng-show="$last">
-                              <div class="col-xs-2">
-                                <label>Configuration</label>
-                              </div>
-                              <div class="col-xs-7">
-                              <!-- {{chrf.attrs[key].slabs}} -->
+                            <br><br><br><br>
+                            <div class="row" >
+                              <div class="col-xs-12">
+                              <label>Configuration</label>
                                 <table class="table">
                                   <tr>
                                     <th>From</th>
                                     <th>To</th>
                                     <th>Rating</th>
                                   </tr>
-                                  <tr ng-repeat = "slab in chrf.attrs[key].slabs">
+                                  <tr ng-repeat = "slab in chrf.attrs['config'].slabs">
                                     <td ng-repeat = "(key, value) in slab">
                                       <input type="text" class="form-control" ng-model="slab[key]" >
                                     </td>
                                   </tr>
                                 </table>
-                                <!-- <input type="text" class="form-control" ng-model="chrf.attrs[key]" ng-disabled="isNotEditable(key)"> -->
                               </div>
                               <br>
                             </div>
@@ -87,7 +87,7 @@
                         </div>
                       </form>
                       <center>
-                        <input type="button" class="btn btn-success" value="Update" ng-click="updateFactor(rf)"/>
+                        <input type="button" class="btn btn-success" value="Update" ng-click="updateFactor(chrf)"/>
                       </center>
                     </div>
                   </uib-accordion>
