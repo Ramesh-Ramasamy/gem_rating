@@ -21,23 +21,17 @@ class RatingFactor < ApplicationRecord
       {
         :id => id,
         :code => code,
-        :attrs => {
-          :code => code,
-          :name => name,
-          :weightage => weightage,
-          :config => config
-        }
+        :name => name,
+        :weightage => weightage,
+        :config => config
       }
     else
       {
         :id => id,
         :code => code,
-        :attrs => {
-          :code => code,
-          :name => name,
-          :weightage => weightage,
-          :config => config
-        },
+        :name => name,
+        :weightage => weightage,
+        :config => config,
         :children => immediate_children.map(&:tree)
       }
     end
