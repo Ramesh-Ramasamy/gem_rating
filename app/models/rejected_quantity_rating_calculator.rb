@@ -1,0 +1,3 @@
+class RejectedQuantityRatingCalculator < RatingCalculator
+
+end

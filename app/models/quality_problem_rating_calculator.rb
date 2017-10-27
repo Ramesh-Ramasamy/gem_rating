@@ -1,0 +1,3 @@
+class QualityProblemRatingCalculator < RatingCalculator
+
+end
