@@ -1,4 +1,9 @@
-object @rating_data
+collection @rating_data
 
-attributes :rateable_id
-attributes :rating
+node :vendor_id do |rd|
+  rd[:rateable_id]
+end
+
+node :rating do |rd|
+  rd[:rating]
+end

@@ -44,15 +44,19 @@ class VendorRatingController < ApplicationController
     rf.weightage = params[:weightage]
     rf.config = JSON.parse(params[:config]).to_h
     rf.save!
+    # pp = permit_params
+    # Rails.logger.info pp.inspect
+    # rf.update_attributes!(pp)
     render json: {status: "success"}
   end
 
   def get_vendors_rating
-    rating_data = VendorRatingEngine.get_vendors_rating
+    @rating_data = VendorRatingEngine.get_vendors_rating
   end
 
   def get_vendor_rating
-    rating_data = VendorRatingEngine.get_vendors_rating(params[:vendor_id])
+    @rating_data = VendorRatingEngine.get_vendor_rating(params[:vendor_id])
+    # raise @rating_data.inspect
   end
 
   private

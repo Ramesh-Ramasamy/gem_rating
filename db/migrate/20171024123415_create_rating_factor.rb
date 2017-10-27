@@ -4,6 +4,7 @@ class CreateRatingFactor < ActiveRecord::Migration[5.1]
       t.string :code
       t.string :name
       t.string :description
+      t.integer :level
       t.integer :parent_id
       t.integer :weightage
       t.text :config

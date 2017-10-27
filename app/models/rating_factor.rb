@@ -1,6 +1,8 @@
 class RatingFactor < ApplicationRecord
   belongs_to :rating_calculator
   belongs_to :rating_framework
+  belongs_to :rateable, polymorphic: true
+  has_many :rating_factor_summaries
   serialize :config, Hash
   # after_update :recompute_rating
 
