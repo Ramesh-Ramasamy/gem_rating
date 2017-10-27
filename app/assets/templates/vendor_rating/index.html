@@ -13,7 +13,7 @@
               <div ng-init="arrowimg = 'down'" ng-click="arrowimg=arrow_img(arrowimg)" class="tab-expand">
                 <span class="text-capitalize" style="color: #02aef0"><b>{{rf.code}}</b> </span>
                 <div style="float: right">
-                  <span style="color:red"><b>{{rf.attrs.weightage}} % </b></span>
+                  <span style="color:red"><b>{{rf.weightage}} % </b></span>
                   <img ng-src="/images/{{arrowimg}}.png" alt = "/images/down.png" style="margin-top: -5px;" width=30 height=30>
                 </div>
               </div>
@@ -21,11 +21,11 @@
             <form role="form">
               <div class="form-group">
                 <div class="row" style="padding: 5px">
-                 <div class="col-xs-3" ng-repeat="(key, value) in rf.attrs">
-                    <div ng-show="!$last">
+                 <div ng-hide ="isNotShowing(key,value)" class="col-xs-3" ng-repeat="(key, value) in rf">
+                    <!-- <div ng-hide ="!isNotShowing(key,value)"> -->
                       <label>{{key}}</label><span style="color:red"ng-if="isPercentageAttrs(key)"><b> (%)</b></span>
-                      <input type="text" class="form-control" ng-model="rf.attrs[key]" ng-disabled="isNotEditable(key)">
-                    </div>
+                      <input type="text" class="form-control" ng-model="rf[key]" ng-disabled="isNotEditable(key)">
+                    <!-- </div> -->
                   </div>
                   <div class="col-xs-3" style="padding-top: 22px;">
                     <center>
@@ -50,7 +50,7 @@
                         <div ng-init="arrowimg = 'down'" ng-click="arrowimg=arrow_img(arrowimg)" class="tab-expand">
                           <span><b>{{chrf.code}}</b> </span>
                           <div style="float: right">
-                            <span style="color:red"><b>{{chrf.attrs.weightage}} %</b></span>
+                            <span style="color:red"><b>{{chrf.weightage}} %</b></span>
                             <img ng-src="/images/{{arrowimg}}.png" alt = "/images/down.png" style="margin-top: -5px;" width=30 height=30>
                           </div>
                         </div>
@@ -58,28 +58,96 @@
                       <form role="form">
                         <div class="form-group">
                           <div class="row" style="padding: 5px">
-                            <div class="col-xs-4" ng-repeat="(key, value) in chrf.attrs">
-                              <div ng-show="!$last">
-                                <label>{{key}}</label><span style="color:red"ng-if="isPercentageAttrs(key)"><b> (%)</b></span>
-                                <input type="text" class="form-control" ng-model="chrf.attrs[key]" ng-disabled="isNotEditable(key)">
-                              </div>
+                            <div ng-hide ="isNotShowing(key,value)" class="col-xs-4" ng-repeat="(key, value) in chrf">
+                              <label>{{key}}</label><span style="color:red"ng-if="isPercentageAttrs(key)"><b> (%)</b></span>
+                              <input type="text" class="form-control" ng-model="chrf[key]" ng-disabled="isNotEditable(key)">
                             </div>
                             <br><br><br><br>
-                            <div class="row" >
+                            <div class="row" ng-if="chrf['config'].type == 'slab_based'">
                               <div class="col-xs-12">
-                              <label>Configuration</label>
-                                <table class="table">
-                                  <tr>
-                                    <th>From</th>
-                                    <th>To</th>
-                                    <th>Rating</th>
-                                  </tr>
-                                  <tr ng-repeat = "slab in chrf.attrs['config'].slabs">
-                                    <td ng-repeat = "(key, value) in slab">
-                                      <input type="text" class="form-control" ng-model="slab[key]" >
-                                    </td>
-                                  </tr>
-                                </table>
+                                <label>Configuration</label>
+                                <div class="row">
+                                  <div class="col-xs-1"></div>
+                                  <div class="col-xs-10">
+                                    <table class="table table-striped table-bordered">
+                                      <tr>
+                                        <th>From</th>
+                                        <th>To</th>
+                                        <th>Rating</th>
+                                      </tr>
+                                      <tr ng-repeat = "slab in chrf['config'].slabs">
+                                        <td >
+                                          <input type="text" class="form-control" ng-model="slab['from']" >
+                                        </td>
+                                        <td >
+                                          <input type="text" class="form-control" ng-model="slab['to']" >
+                                        </td>
+                                        <td >
+                                          <input type="text" class="form-control" ng-model="slab['rating']" >
+                                        </td>
+                                      </tr>
+                                    </table>
+                                    
+                                  </div>
+                                  <div class="col-xs-1"></div>
+                                </div>
+                              </div>
+                              <br>
+                            </div>
+                            <div class="row" ng-if="chrf['config'].type == 'flat_based'">
+                              <div class="col-xs-12">
+                                <label>Configuration</label>
+                                <div class="row">
+                                  <div class="col-xs-2"></div>
+                                  <div class="col-xs-8">
+                                    <table class="table table-striped table-bordered">
+                                      <tr>
+                                        <th>Value</th>
+                                        <th>Rating</th>
+                                      </tr>
+                                      <tr ng-repeat = "slab in chrf['config'].slabs">
+                                        <td ng-repeat = "(key, value) in slab">
+                                          <input type="text" class="form-control" ng-model="slab[key]" >
+                                        </td>
+                                      </tr>
+                                    </table>
+                                  </div>
+                                  <div class="col-xs-2"></div>
+                                </div>
+                              </div>
+                              <br>
+                            </div>
+                            <div class="row" ng-if="chrf['config'].type == 'optimal_value_based'">
+                              <div class="col-xs-12">
+                                <label>Configuration</label>
+                                <div class="row">
+                                  <div class="col-xs-2"></div>
+                                  <div class="col-xs-8">
+                                    <table class="table table-striped table-bordered">
+                                      <tr>
+                                        <th>Operator</th>
+                                        <th>Value</th>
+                                        <th>Rating</th>
+                                      </tr>
+                                      <tr ng-repeat = "slab in chrf['config'].slabs">
+                                        <td >
+                                          <select class="form-control" ng-model="selectedName" ng-options="item as item.operator for item in slab track by item.operator">
+                                            
+                                          </select>
+                                          <!-- <input type="text" class="form-control" ng-model="slab['operator']" > -->
+                                        </td>
+                                        <td >
+                                          <input type="text" class="form-control" ng-model="slab['value']" >
+                                        </td>
+                                        <td >
+                                          <input type="text" class="form-control" ng-model="slab['rating']" >
+                                        </td>
+                                      </tr>
+                                    </table>
+                                    
+                                  </div>
+                                  <div class="col-xs-2"></div>
+                                </div>
                               </div>
                               <br>
                             </div>

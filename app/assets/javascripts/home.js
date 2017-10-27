@@ -23,29 +23,27 @@ home.controller("vendorRatingCtrl", ['$scope','Restangular', function($scope,$re
     $scope.alerts.splice(index, 1)
   };
 
-  $rest.all('vendor_rating').customGETLIST('get_rating_factors').then(function(data){
-    $scope.rating_factors = data[0].rating_factors_tree
+  $rest.all('vendor_rating').customGET('get_rating_factors').then(function(data){
+    $scope.rating_factors = data.rating_factors_tree
     console.log(data)
   });
 
   $scope.updateFactor = function(rating_factor){
     console.log("Ramesh",rating_factor)
-    ha = {}
-    ha.id = rating_factor.id
-    ha.config = rating_factor.attrs.config
-    ha.weightage = rating_factor.attrs.weightage
-        // rating_factor.cpnfig = rating_factor.attrs.config
-    // rating_factor.cpnfig = rating_factor.
-    // rating_factor.cpnfig = rating_factor.config 
-    $rest.all('vendor_rating').customPOST({},'update_rating_factor',{id : ha.id,config: ha.config,weightage: ha.weightage }).then(function(data){
+    $rest.all('vendor_rating').customPOST({},'update_rating_factor',{id : rating_factor.id,config: rating_factor.config,weightage: rating_factor.weightage }).then(function(data){
       if(data.status == "success")
         $scope.addAlert({type:data.status,msg: "Updated Successfully!!!"})
       else
         $scope.addAlert({type:'danger',msg: "Updation Not completed due to some error"})
     })
   }
-
-  editableAttrs = ['weightage', 'config']
+  notShowingAttrs = ['id','config','children','code']
+  $scope.isNotShowing = function(key,value){
+    if(angular.equals({}, value))
+      return true 
+    return  _.indexOf(notShowingAttrs, key) == -1 ? false : true
+  } 
+  editableAttrs = ['name','weightage', 'config']
   $scope.isNotEditable = function(key){
     return  _.indexOf(editableAttrs, key) == -1 ? true : false
   }
