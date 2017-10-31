@@ -23,7 +23,8 @@ class RatingFactor < ApplicationRecord
         :code => code,
         :name => name,
         :weightage => weightage,
-        :config => config
+        :config => config,
+        :description => description
       }
     else
       {
@@ -32,6 +33,7 @@ class RatingFactor < ApplicationRecord
         :name => name,
         :weightage => weightage,
         :config => config,
+        :description => description,
         :children => immediate_children.map(&:tree)
       }
     end

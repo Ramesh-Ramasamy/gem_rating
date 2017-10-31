@@ -1,0 +1,27 @@
+<div class="modal-header">
+  <h3 class="modal-title" id="modal-title">Update</h3>
+  <div style="z-index:100;position: fixed; top: 0; right: 0; width: 40%">
+    <div uib-alert ng-repeat="alert in $ctrl.alerts" ng-class="'alert-' + (alert.type || 'warning')" close="$ctrl.closeAlert($index)" dismiss-on-timeout="3000">{{alert.msg}}</div>
+  </div>
+</div>
+<div class="modal-body" id="modal-body">
+	<div class="row">
+		<div class="col-md-6"><b>Name</b></div>
+		<div class="col-md-6"><b>Weightage (%)<b></div>
+	</div>
+  <div ng-repeat="factor in $ctrl.factors">
+	  <div class="row">
+	  	<div class="col-md-6"><input class="form-control" type="text" ng-model="factor.code" /></div>
+	  	<div class="col-md-6"><input class="form-control" type="text" ng-model="factor.weightage" ng-change="$ctrl.totalWeightage(factor)"/></div>
+	  </div>
+	  <br>
+  </div>
+  <div class="row">
+		<div class="col-md-6"><b></b></div>
+		<div class="col-md-6"><b style="color:green">{{$ctrl.weitageSum}}</b>/<b style="color:red">100<b> (%)</div>
+	</div>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-primary" type="button" ng-disabled="$ctrl.weitageSum != 100" disable-onclick="$ctrl.updateWeightage()">Update</button>
+  <button class="btn btn-warning" type="button" ng-click="$ctrl.cancel()">Cancel</button>
+</div>

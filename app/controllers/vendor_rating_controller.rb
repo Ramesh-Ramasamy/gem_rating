@@ -25,6 +25,17 @@ class VendorRatingController < ApplicationController
   #   render json: result
   # end
 
+  def update_rating_factors
+  	params["factors"].each do |f|
+  		rf = RatingFactor.where(id: f[:id]).first
+	    Rails.logger.info permit_params
+	    Rails.logger.info f.inspect
+	    rf.weightage = f[:weightage]
+	    rf.config = f[:config].to_h
+	    rf.save!
+  	end
+  	render json: {status: "success"}
+  end
 
   def update_rating_factor
     rf = RatingFactor.where(id: params[:id]).first
@@ -46,6 +57,6 @@ class VendorRatingController < ApplicationController
 
   private
   def permit_params
-    params.permit(:id, :weightage, {config:{}})
+    params.permit!
   end
 end
