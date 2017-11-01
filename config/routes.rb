@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
+      match '*path', to: 'base#cors_preflight',  via: [:OPTIONS]
       resources :rating_events, only: [] do
         collection do
           get :get_data
