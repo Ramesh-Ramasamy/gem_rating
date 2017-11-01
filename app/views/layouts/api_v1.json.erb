@@ -1,0 +1,6 @@
+{
+  "status": "<%= @_status || "success" %>",
+  "error": <%= @_errors.to_json %>,
+  "result": <%= yield %>,
+  "headers" : <%= prepare_api_headers.to_json %>
+}

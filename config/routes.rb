@@ -8,5 +8,14 @@ Rails.application.routes.draw do
   post 'vendor_rating/update_rating_factor'
   post 'vendor_rating/update_rating_factors'
 
+  namespace :api do
+    namespace :v1 do
+      resources :rating_events, only: [] do
+        collection do
+          get :get_data
+        end
+      end
+    end
+  end
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

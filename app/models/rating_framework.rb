@@ -1,5 +1,6 @@
 class RatingFramework < ApplicationRecord
 
+  has_many :rating_events
   has_many :rating_factors
 
   def root_rating_factor

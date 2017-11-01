@@ -10,6 +10,10 @@ class RatingFactor < ApplicationRecord
     self[:config] ||= {}
   end
 
+  def get_data
+    config["data_needed"]
+  end
+
   def recompute_rating
     (self.rating_framework.camelcase + "Engine").constantize.recompute_rating
   end
